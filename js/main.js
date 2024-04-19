@@ -66,7 +66,6 @@ createApp({
           this.showPrev();
         }
         console.log("start:", this.isIntervalActive);
-        //   // this.isIntervalActive = false;
       }, 3000);
     },
     handleStart: function () {
