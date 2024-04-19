@@ -5,22 +5,11 @@ const { createApp } = Vue;
 createApp({
   data() {
     return {
-      interval: setInterval(()=> {
-        if (this.isIntervalActive) {
-          if (this.isNext) {
-            this.showNext();
-          } else {
-            this.showPrev()
-          }
-        } else {
-          this.isIntervalActive = false
-        }
-        
-      }, 3000),
+      interval: null,
       isIntervalActive: true,
       activeIndex: 0,
       greetings: "test vue",
-      isNext: false,
+      isNext: true,
       images: [
         {
           image: "img/01.webp",
@@ -50,15 +39,45 @@ createApp({
       ],
     };
   },
-  created(){
-    this.interval
+  created() { //una sola volta all'avvio della pagina
+    this.startInt();
   },
   methods: {
-    showNext: function(){
-      this.activeIndex === this.images.length - 1 ? this.activeIndex = 0 : this.activeIndex++;
+    showNext: function () {
+      this.activeIndex === this.images.length - 1
+        ? (this.activeIndex = 0)
+        : this.activeIndex++;
     },
-    showPrev: function(){
-      this.activeIndex > 0 ? this.activeIndex-- : this.activeIndex = this.images.length -1;
+    showPrev: function () {
+      this.activeIndex > 0
+        ? this.activeIndex--
+        : (this.activeIndex = this.images.length - 1);
+    },
+    clearInt: function () {
+      console.log("stop:", this.isIntervalActive);
+
+      clearInterval(this.interval);
+    },
+    startInt: function () {
+      this.interval = setInterval(() => {
+        if (this.isNext) {
+          this.showNext();
+        } else {
+          this.showPrev();
+        }
+        console.log("start:", this.isIntervalActive);
+        //   // this.isIntervalActive = false;
+      }, 3000);
+    },
+    handleStart: function () {
+      if (this.isIntervalActive) {
+        this.clearInt();
+
+      } else {
+        this.startInt();
+
+      }
+      this.isIntervalActive = !this.isIntervalActive
     }
-  }
+  },
 }).mount("#app");
