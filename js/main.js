@@ -60,22 +60,13 @@ createApp({
     },
     startInt: function () {
       this.interval = setInterval(() => {
-        if (this.isNext) {
-          this.showNext();
-        } else {
-          this.showPrev();
-        }
+
+        this.isNext ? this.showNext() : this.showPrev();
         console.log("start:", this.isIntervalActive);
       }, 3000);
     },
     handleStart: function () {
-      if (this.isIntervalActive) {
-        this.clearInt();
-
-      } else {
-        this.startInt();
-
-      }
+      this.isIntervalActive ? this.clearInt() : this.startInt();
       this.isIntervalActive = !this.isIntervalActive
     }
   },
